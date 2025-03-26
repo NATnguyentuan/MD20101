@@ -3,6 +3,7 @@ const router = express.Router();
 const Fruits = require("../model/fruits");
 const Users = require("../model/user");
 const Distributor = require("../model/distibutor");
+const Upload = require("../config/common/upload")
 //thêm distributor
 router.post("/add_fruit", async (req, res) => {
     //lấy dữ liệu
@@ -15,7 +16,7 @@ router.post("/add_fruit", async (req, res) => {
         status: data.status,
         image: data.image,
         description: data.description,
-        
+
     });
     const result = await newFruits.save();
 
@@ -34,14 +35,14 @@ router.post("/add_fruit", async (req, res) => {
     }
 });
 router.get("/get-list-fruit", async (req, res) => {
-    try{
-        const data  = await Fruits.find().populate('id_distributor');
+    try {
+        const data = await Fruits.find().populate('id_distributor');
         res.json({
             "status": 200,
-            "messenger": "Danh sach fruit", 
-            "data" : data
+            "messenger": "Danh sach fruit",
+            "data": data
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 });
@@ -129,7 +130,7 @@ router.put("/update-fruit-by-id/:id", async (req, res) => {
         if (typeof data.status !== "undefined") updatefruit.status = Number(data.status);
         if (typeof data.image !== "undefined") updatefruit.image = data.image;
         if (typeof data.description !== "undefined") updatefruit.description = data.description;
-        if (typeof data.id_distributor !== "undefined") updatefruit.id_distributor = data.id_distributor;
+        // if (typeof data.id_distributor !== "undefined") updatefruit.id_distributor = data.id_distributor;
 
         // Lưu cập nhật
         const result = await updatefruit.save();
@@ -148,7 +149,7 @@ router.put("/update-fruit-by-id/:id", async (req, res) => {
 router.delete("/deleteFruitsById/:id", async (req, res) => {
     try {
         const { id } = req.params; // Lấy ID từ request params
-        
+
         // Kiểm tra nếu ID hợp lệ (MongoDB ObjectId)
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
             return res.status(400).json({
@@ -190,7 +191,7 @@ router.post("/add_distributor", async (req, res) => {
     //tạo đối tượng distributor
     const newDistributor = new Distributor({
         name: data.name,
-        
+
     });
     const result = await newDistributor.save();
 
@@ -209,7 +210,56 @@ router.post("/add_distributor", async (req, res) => {
     }
 });
 
+//upload
 
- 
+const multer = require("multer");
+const storege = multer.diskStorage({
+    destination:(req, file, cb)=> {
+        cb(null, "public/uploads");
+    },
+    filename: (req, file, cb)=>{
+        cb(null, file.fieldname + "-" + Date.now() + file.originalname);
+    },
+});
+const upload = multer({storage:storege});
+
+module.export = upload
+// router.post('/add-fruit-with-file-image', upload.array('image', 5), async (req, res) => {
+//     try {
+//         const data = req.body;
+//         const { files } = req
+//         const urlsImage =
+//             files.map((file) => `${req.protocol}://${req.get("host")}uploads/${file.filename}`)
+
+//         const newFruits = newFruits({
+//             name: data.name,
+//             quantity: data.quantity,
+//             price: data.price,
+//             status: data.status,
+//             image: urlsImage,
+//             description: data.description,
+//         });
+//         const result = await newFruits.save();
+//         if (result) {// Nếu thêm thành công result !null trả về dữ liệu
+//             res.json({
+//                 "status": 200,
+//                 "messenger": "Thêm thành công",
+//                 "data": result
+//             })
+//         } else {// Nếu thêm không thành công result null, thông báo không thành công
+//             res.json({
+//                 "status": 400,
+//                 "messenger": "Lỗi, thêm không thành công",
+//                 "data": []
+//             })
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+// )
+
+
+
 
 module.exports = router;
