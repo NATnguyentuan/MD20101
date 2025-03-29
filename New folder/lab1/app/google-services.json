@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "573781258041",
+    "project_id": "md19210-2025",
+    "storage_bucket": "md19210-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573781258041:android:e115d1836f6068b1af82e8",
+        "android_client_info": {
+          "package_name": "fpoly.nat.lab1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEkD9KAIdPt7rmhTYxHHlvr7VJA9JiuVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573781258041:android:9c1f86042e5a4d68af82e8",
+        "android_client_info": {
+          "package_name": "fpoly.nat.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEkD9KAIdPt7rmhTYxHHlvr7VJA9JiuVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
